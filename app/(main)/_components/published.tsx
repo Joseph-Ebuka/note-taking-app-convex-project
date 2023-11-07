@@ -51,10 +51,14 @@ export const Published = () => {
 
     return url;
   };
+  const onSelect = ()=>{
+    onClose()
+  }
 
   if (!isMounted) {
     return null;
   }
+
 
   return (
     <div>
@@ -72,6 +76,7 @@ export const Published = () => {
                         <CommandItem
                           key={document._id}
                           value={`${document._id}- ${document.title}`}
+                          onSelect={onSelect}
                         >
                           <Link href={documentId(document._id)}>
                             <span>{document.title}</span>
