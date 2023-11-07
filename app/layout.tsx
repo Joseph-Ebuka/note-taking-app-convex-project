@@ -12,7 +12,7 @@ import { EdgeStoreProvider } from "@/lib/edgestore";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jotion",
+  title: "Cre8note",
   description:
     "Write and share clean notes with teams, companies, families and friends",
   icons: {

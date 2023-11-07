@@ -35,6 +35,7 @@ interface ItemProps {
   label: string;
   onClick?: () => void;
   icon: LucideIcon;
+  isArticles?: boolean;
 }
 export const Item = ({
   label,
@@ -47,21 +48,20 @@ export const Item = ({
   active,
   isSearch,
   level = 0,
+  isArticles,
 }: ItemProps) => {
   const { user } = useUser();
   const router = useRouter();
   const create = useMutation(api.documents.create);
   const archive = useMutation(api.documents.archive);
 
-  const onArchive = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
+  const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
 
     const promise = archive({ id }).then((documentId) => {
-      router.push("/documents")
-    })
+      router.push("/documents");
+    });
 
     toast.promise(promise, {
       loading: "Moving to trash...",
@@ -84,7 +84,7 @@ export const Item = ({
         if (!expanded) {
           onExpand?.();
         }
-         router.push(`/documents/${documentId}`)
+        router.push(`/documents/${documentId}`);
       }
     );
     toast.promise(promise, {
@@ -98,7 +98,7 @@ export const Item = ({
     <div
       onClick={onClick}
       style={{
-        paddingLeft: level ? `${(level * 12 ) + 12}px` : "12px",
+        paddingLeft: level ? `${level * 12 + 12}px` : "12px",
       }}
       className={cn(
         "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
@@ -123,6 +123,11 @@ export const Item = ({
       {isSearch && (
         <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           <span className="text-xs">CTRL</span>K
+        </kbd>
+      )}
+      {isArticles && (
+        <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+          <span className="text-xs">CTRL</span>O
         </kbd>
       )}
       {!!id && (

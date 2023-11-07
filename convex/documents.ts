@@ -349,3 +349,16 @@ export const removeCoverImage = mutation({
     return document;
   },
 });
+
+export const getPublished = query({
+  handler: async (ctx) => {
+    const document = await ctx.db
+      .query("documents")
+      .filter((q) => q.eq(q.field("isPublished"), true))
+      .order("asc")
+      .collect();
+
+    return document;
+  },
+});
+

@@ -41,7 +41,7 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
       )}
     >
       {!!url && (
-        <Image src={url} alt="cover image" fill className="object-cover" />
+        <Image src={url} alt="cover image" fill className=" object-cover object-center max-w-full" />
       )}
       {url && !preview && (
         <div className="opacity-0 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">

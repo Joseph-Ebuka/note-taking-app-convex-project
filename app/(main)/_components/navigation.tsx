@@ -3,6 +3,7 @@ import { ElementRef, useRef, useEffect, useState } from "react";
 
 import {
   ChevronsLeft,
+  Globe,
   MenuIcon,
   Plus,
   PlusCircle,
@@ -33,12 +34,15 @@ import { UserItem } from "./user-item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
 import { Navbar } from "./navabar";
+import { Published } from "./published";
+import { usePublishedStore } from "@/hooks/use-published";
 
 export const Navigation = () => {
   const settings = useSettings();
+  const articles = usePublishedStore();
   const search = useSearch();
   const params = useParams();
-  const router = useRouter()
+  const router = useRouter();
   const pathName = usePathname();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -131,9 +135,9 @@ export const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" }).then((documentId) =>{
-      router.push(`/documents/${documentId}`)
-    })
+    const promise = create({ title: "Untitled" }).then((documentId) => {
+      router.push(`/documents/${documentId}`);
+    });
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "New note created!",
@@ -180,7 +184,15 @@ export const Navigation = () => {
               <TrashBox />
             </PopoverContent>
           </Popover>
+
+          <Item
+            label=" Published articles"
+            icon={Globe}
+            onClick={articles.onOpen}
+            isArticles
+          />
         </div>
+
         <div
           className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
           onMouseDown={handleMouseDown}
